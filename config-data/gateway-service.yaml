@@ -1,0 +1,55 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+        default-filters:
+          - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: '*'
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: booking-service
+          uri: lb://booking-service
+          predicates:
+            - Path=/api/booking/**
+        - id: FrequencyDiscount-service
+          uri: lb://FrequencyDiscount-service
+          predicates:
+            - Path=/api/frequencydiscount/**
+        - id: GroupDiscount-service
+          uri: lb://GroupDiscount-service
+          predicates:
+            - Path=/api/groupdiscount/**
+        - id: IncomingReport-service
+          uri: lb://IncomingReport-service
+          predicates:
+            - Path=/api/report/**
+        - id: SpecialDays-service
+          uri: lb://SpecialDays-service
+          predicates:
+            - Path=/api/specialdays/**
+        - id: Track-service
+          uri: lb://Track-service
+          predicates:
+            - Path=/api/track/**
+        - id: Pricing-service
+          uri: lb://Pricing-service
+          predicates:
+            - Path=/api/pricing/**

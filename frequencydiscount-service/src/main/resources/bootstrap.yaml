@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: frequencydiscount-service
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8081
+  datasource:
+    url: jdbc:postgresql://localhost:5432/frequencydiscount
+    username: postgres
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update

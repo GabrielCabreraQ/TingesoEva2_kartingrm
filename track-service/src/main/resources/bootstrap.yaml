@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: track-service
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8081
+  datasource:
+    url: jdbc:postgresql://localhost:5432/track
+    username: postgres
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update
