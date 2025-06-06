@@ -214,10 +214,6 @@ public class IncomingReportService {
         }
         twentyLaps.createCell(cellIndex20).setCellValue(totalIncome20LapsAll);
 
-        Row totalC = sheet.createRow(7);
-        totalC.createCell(0).setCellValue("TOTAL");
-
-
         // Crear fila de total general por mes (suma vertical por columna)
         Row totalRow = sheet.createRow(7);
         totalRow.createCell(0).setCellValue("TOTAL");
