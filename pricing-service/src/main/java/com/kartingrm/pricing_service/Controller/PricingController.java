@@ -67,7 +67,7 @@ public class PricingController {
         return pricingService.getBasePriceForLaps(numberLap);
     }
 
-    @PostMapping("/calculate-daydiscount")
+    @PostMapping("/calculate-bdaydiscount")
     public double calculateBirthdayDiscount(
             @RequestBody Client participant,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bookingDate) {
@@ -76,14 +76,14 @@ public class PricingController {
 
     @PostMapping("/calculate-price")
     public double calculatePricePerPerson(
-            @RequestBody PricePersonRequest request) { // <-- Only expect the request body DTO
+            @RequestBody PricePersonRequest request) {
         return pricingService.calculatePricePerPerson(
                 request.getParticipant(),
-                request.getBookingDate(),   // Get these from the request body DTO
-                request.getGroupSize(),     // Get these from the request body DTO
-                request.getNumberLap(),     // Get these from the request body DTO
-                request.getPricing(),       // Get these from the request body DTO
-                request.getApplyBirthday());// Get these from the request body DTO
+                request.getBookingDate(),
+                request.getGroupSize(),
+                request.getNumberLap(),
+                request.getPricing(),
+                request.getApplyBirthday());
     }
 
     @PostMapping("/calculate-birthday-total")
