@@ -217,14 +217,19 @@ public class IncomingReportService {
         Row totalRow = sheet.createRow(7);
         totalRow.createCell(0).setCellValue("TOTAL");
 
-        int numMeses = Period.between(startDate.withDayOfMonth(1), endDate.withDayOfMonth(1)).getMonths() + 1;
+        YearMonth startYearMonth = YearMonth.from(startDate);
+        YearMonth endYearMonth = YearMonth.from(endDate);
 
-        for (int col = 1; col <= numMeses + 1; col++) {
+        int numberOfMonthColumns = (endYearMonth.getYear() - startYearMonth.getYear()) * 12 +
+                (endYearMonth.getMonthValue() - startYearMonth.getMonthValue()) + 1;
+
+
+        for (int col = 1; col <= numberOfMonthColumns + 1; col++) {
             double totalMes = 0.0;
 
             for (int fila = 4; fila <= 6; fila++) {
-                Row dataRow = sheet.getRow(fila); // Obtener la fila correspondiente
-                if (dataRow != null) { // Asegurarse de que la fila existe
+                Row dataRow = sheet.getRow(fila);
+                if (dataRow != null) { // Verificar si la fila existe
                     Cell cell = dataRow.getCell(col);
                     if (cell != null && cell.getCellType() == CellType.NUMERIC) {
                         totalMes += cell.getNumericCellValue();
@@ -233,7 +238,6 @@ public class IncomingReportService {
             }
             totalRow.createCell(col).setCellValue(totalMes);
         }
-
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         workbook.write(baos);
