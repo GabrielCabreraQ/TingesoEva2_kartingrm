@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/specialdays")
-@CrossOrigin("*")
 public class SpecialDaysController {
     @Autowired
     private SpecialDaysService specialDaysService;
