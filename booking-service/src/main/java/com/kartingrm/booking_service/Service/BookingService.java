@@ -91,6 +91,7 @@ public class BookingService {
         return bookingRepository.findBookingsBetweenDates(startDate, endDate);
     }
 
+    @Transactional
     public List<Booking> getBookingsByLapsAndDate(int laps, int month, int year) {
         return bookingRepository.findBookingLapsByMY(laps, month, year);
     }
