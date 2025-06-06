@@ -16,22 +16,19 @@ spring:
       discovery:
         locator:
           enabled: true
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOrigins: "http://localhost:5173"
-            allowedMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
-            allowedHeaders: "*"
-            allowCredentials: true
       default-filters:
         - RemoveResponseHeader=Access-Control-Allow-Origin
         - RemoveResponseHeader=Access-Control-Allow-Credentials
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
       routes:
-        - id: booking-service
+        - id: booking-service-booking
           uri: lb://booking-service
           predicates:
             - Path=/api/booking/**
+        - id: booking-service-client
+          uri: lb://booking-service
+          predicates:
+            - Path=/api/client/**
         - id: frequencydiscount-service
           uri: lb://frequencydiscount-service
           predicates:
