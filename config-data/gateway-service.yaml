@@ -34,7 +34,7 @@ spring:
           uri: lb://frequencydiscount-service
           predicates:
             - Path=/api/frequencydiscount/**
-        - id: GroupDiscount-service
+        - id: groupgiscount-service
           uri: lb://groupdiscount-service
           predicates:
             - Path=/api/groupdiscount/**
