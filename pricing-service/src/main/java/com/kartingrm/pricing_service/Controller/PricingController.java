@@ -75,13 +75,14 @@ public class PricingController {
 
     @PostMapping("/calculate-price")
     public double calculatePricePerPerson(
-            @RequestBody PricePersonRequest request,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bookingDate,
-            @RequestParam int groupSize,
-            @RequestParam int numberLap,
-            @RequestParam int applyBirthday) {
+            @RequestBody PricePersonRequest request) { // <-- Only expect the request body DTO
         return pricingService.calculatePricePerPerson(
-                request.getParticipant(), bookingDate, groupSize, numberLap, request.getPricing(), applyBirthday);
+                request.getParticipant(),
+                request.getBookingDate(),   // Get these from the request body DTO
+                request.getGroupSize(),     // Get these from the request body DTO
+                request.getNumberLap(),     // Get these from the request body DTO
+                request.getPricing(),       // Get these from the request body DTO
+                request.getApplyBirthday());// Get these from the request body DTO
     }
 
     @PostMapping("/calculate-birthday-total")
