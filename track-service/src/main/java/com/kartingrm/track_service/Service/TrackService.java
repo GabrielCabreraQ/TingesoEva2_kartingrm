@@ -19,7 +19,7 @@ public class TrackService {
     RestTemplate restTemplate;
 
     public boolean isSpecialDay(LocalDate date) {
-        String url = "http://SpecialDays-service/api/specialdays/isSpecial?date=" + date.toString();
+        String url = "http://specialdays-service/api/specialdays/isSpecial?date=" + date.toString();
         return restTemplate.getForObject(url, Boolean.class);
     }
 
