@@ -21,9 +21,10 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: '*'
+            allowedOrigins: "http://localhost:5173"
             allowedMethods: "*"
             allowedHeaders: "*"
+            allowCredentials: true
       routes:
         - id: booking-service
           uri: lb://booking-service
