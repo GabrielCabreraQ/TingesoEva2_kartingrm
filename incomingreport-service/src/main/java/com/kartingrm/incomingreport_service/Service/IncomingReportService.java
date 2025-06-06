@@ -214,7 +214,6 @@ public class IncomingReportService {
         }
         twentyLaps.createCell(cellIndex20).setCellValue(totalIncome20LapsAll);
 
-        // Crear fila de total general por mes (suma vertical por columna)
         Row totalRow = sheet.createRow(7);
         totalRow.createCell(0).setCellValue("TOTAL");
 
@@ -223,10 +222,13 @@ public class IncomingReportService {
         for (int col = 1; col <= numMeses + 1; col++) {
             double totalMes = 0.0;
 
-            for (int fila = 4; fila <= 7; fila++) { // filas de 10, 15 y 20 vueltas
-                Cell cell = sheet.getRow(fila).getCell(col);
-                if (cell != null && cell.getCellType() == CellType.NUMERIC) {
-                    totalMes += cell.getNumericCellValue();
+            for (int fila = 4; fila <= 6; fila++) {
+                Row dataRow = sheet.getRow(fila); // Obtener la fila correspondiente
+                if (dataRow != null) { // Asegurarse de que la fila existe
+                    Cell cell = dataRow.getCell(col);
+                    if (cell != null && cell.getCellType() == CellType.NUMERIC) {
+                        totalMes += cell.getNumericCellValue();
+                    }
                 }
             }
             totalRow.createCell(col).setCellValue(totalMes);
