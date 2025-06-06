@@ -73,7 +73,7 @@ public class PricingController {
         return pricingService.calculateBirthdayDiscount(participant, bookingDate);
     }
 
-    @PostMapping("/calculate-price-person")
+    @PostMapping("/calculate-price")
     public double calculatePricePerPerson(
             @RequestBody PricePersonRequest request,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bookingDate,
@@ -100,7 +100,6 @@ public class PricingController {
         pricingService.deletePricing(id);
         return ResponseEntity.noContent().build();
     }
-
 
     @GetMapping("/endtime")
     public LocalTime calculateEndTime(@RequestParam LocalTime startTime, @RequestParam int laps) {
