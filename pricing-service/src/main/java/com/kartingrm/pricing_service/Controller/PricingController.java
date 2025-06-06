@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/pricing")
 public class PricingController {
+
     @Autowired
     private PricingService pricingService;
 
