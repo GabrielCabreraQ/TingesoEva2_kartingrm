@@ -146,14 +146,14 @@ public class PricingService {
     //============== REST TEMPLATE METHODS ============== //
 
     public double calculateGroupDiscount(int groupsize) {
-        String url = "http://groupdiscount-service/api/calculate" + "/" + groupsize;
+        String url = "http://groupdiscount-service/api/groupdiscount/calculate" + "/" + groupsize;
         return restTemplate.getForObject(url, Double.class);
 
 
     }
 
     public double calculateFrequencyDiscount(Client participant, LocalDate bookingDate) {
-        String url = "http://frequencydiscount-service/api/calculate";
+        String url = "http://frequencydiscount-service/api/frequencydiscount/calculate";
 
         Map<String, Object> body = Map.of(
                 "participant", participant,
