@@ -146,14 +146,14 @@ public class PricingService {
     //============== REST TEMPLATE METHODS ============== //
 
     public double calculateGroupDiscount(int groupsize) {
-        String url = "http://GroupDiscount-service/api/calculate" + "/" + groupsize;
+        String url = "http://groupdiscount-service/api/calculate" + "/" + groupsize;
         return restTemplate.getForObject(url, Double.class);
 
 
     }
 
     public double calculateFrequencyDiscount(Client participant, LocalDate bookingDate) {
-        String url = "http://pricing-service/api/frequencydiscount/calculate";
+        String url = "http://frequencydiscount-service/api/calculate";
 
         Map<String, Object> body = Map.of(
                 "participant", participant,
@@ -175,12 +175,12 @@ public class PricingService {
     }
 
     public boolean isSpecialDay(LocalDate date) {
-        String url = "http://SpecialDays-service/api/specialdays/isSpecial/{date}";
+        String url = "http://specialdays-service/api/specialdays/isSpecial/{date}";
         return restTemplate.getForObject(url, Boolean.class, date);
     }
 
     public boolean isWeekend(LocalDate date) {
-        String url = "http://Track-service/api/track/isWeekend/{date}";
+        String url = "http://track-service/api/track/isWeekend/{date}";
         return restTemplate.getForObject(url, Boolean.class, date);
     }
 

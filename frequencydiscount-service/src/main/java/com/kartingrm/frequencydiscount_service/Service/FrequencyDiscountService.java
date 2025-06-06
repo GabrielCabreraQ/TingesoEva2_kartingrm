@@ -22,7 +22,7 @@ public class FrequencyDiscountService {
 
 
     public Pricing getLastPricing() {
-        String url = "http://Pricing-service/api/pricing/last";
+        String url = "http://pricing-service/api/pricing/last";
         return restTemplate.getForObject(url, Pricing.class);
     }
 
