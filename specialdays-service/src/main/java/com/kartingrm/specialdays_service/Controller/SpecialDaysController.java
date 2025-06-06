@@ -25,7 +25,6 @@ public class SpecialDaysController {
         return ResponseEntity.ok(specialDays);
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<SpecialDays> getSpecialDayById(@PathVariable Long id) {
         SpecialDays specialDay = specialDaysService.getSpecialDayById(id);
@@ -49,6 +48,7 @@ public class SpecialDaysController {
         specialDaysService.deleteSpecialDay(id);
         return ResponseEntity.noContent().build();
     }
+
     @GetMapping("/isSpecial/{date}")
     public ResponseEntity<Boolean> isSpecialDay(
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
