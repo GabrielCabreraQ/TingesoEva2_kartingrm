@@ -482,7 +482,7 @@ public class BookingService {
     }
 
     public LocalTime calculateEndTime(LocalTime startTime, int laps) {
-        String url = "http://pricing-service/api/pricing/entime?startTime=" + startTime + "&laps=" + laps;
+        String url = "http://pricing-service/api/pricing/endtime?startTime=" + startTime + "&laps=" + laps;
         return restTemplate.getForObject(url, LocalTime.class);
     }
 
