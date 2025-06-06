@@ -173,6 +173,7 @@ public class BookingService {
 
         for (Client participant : nonBirthdayClients) {
             double individualPrice = calculatePricePerPerson(participant, bookingDate, groupSize, numberLap, pricing, 0);
+
             totalPrice += individualPrice;
         }
 
