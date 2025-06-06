@@ -12,7 +12,6 @@ import java.time.LocalTime;
 
 @RestController
 @RequestMapping("/api/track")
-@CrossOrigin("*")
 public class TrackController {
 
     @Autowired

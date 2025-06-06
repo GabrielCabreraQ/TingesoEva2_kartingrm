@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/frequencydiscount")
-@CrossOrigin("*")
 public class FrequencyDiscountController {
     @Autowired
     FrequencyDiscountService frequencyDiscountService;

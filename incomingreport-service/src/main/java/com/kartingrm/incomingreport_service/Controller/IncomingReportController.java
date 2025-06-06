@@ -17,7 +17,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/report")
-@CrossOrigin("*")
 public class IncomingReportController {
     @Autowired
     IncomingReportService incomingReportService;

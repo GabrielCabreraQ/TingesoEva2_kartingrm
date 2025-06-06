@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/groupdiscount")
-@CrossOrigin("*")
 public class GroupDiscountController {
 
     @Autowired

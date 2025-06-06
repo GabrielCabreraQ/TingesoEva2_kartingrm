@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/client")
-@CrossOrigin("*")
 public class ClientController {
 
 
