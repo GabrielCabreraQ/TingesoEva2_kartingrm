@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booking-service-deployment
+  labels:
+    app: booking-service-deployment
+spec:
+  selector:
+    matchLabels:
+      app: booking-service-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: booking-service-deployment
+    spec:
+      containers:
+        - name: booking-service
+          image: gabrielcq/booking-service
+          ports:
+            - containerPort: 8096
+          env:
+            - name: SERVER_PORT
+              value: "0"
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_HOST_BOOKING
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_PORT_BOOKING
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_NAME_BOOKING
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_USER_BOOKING
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_PASSWORD_BOOKING

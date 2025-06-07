@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: groupdiscount-service-deployment
+  labels:
+    app: groupdiscount-service-deployment
+spec:
+  selector:
+    matchLabels:
+      app: groupdiscount-service-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: groupdiscount-service-deployment
+    spec:
+      containers:
+        - name: groupdiscount-service
+          image: gabrielcq/groupdiscount-service
+          ports:
+            - containerPort: 8096
+          env:
+            - name: SERVER_PORT
+              value: "0"
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_HOST_GROUPDISCOUNT
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_PORT_GROUPDISCOUNT
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_NAME_GROUPDISCOUNT
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_USER_GROUPDISCOUNT
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_PASSWORD_GROUPDISCOUNT

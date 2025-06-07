@@ -4,11 +4,8 @@ spring:
   cloud:
     config:
       enabled: true
-      uri: http://localhost:8081
-  datasource:
-    url: jdbc:postgresql://localhost:5432/track
-    username: postgres
-    password: 1234
+  config:
+    import: configserver:http://config-server-service:8888
   jpa:
     hibernate:
       ddl-auto: update

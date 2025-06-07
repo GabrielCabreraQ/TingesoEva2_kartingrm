@@ -1,14 +1,11 @@
 spring:
   application:
     name: pricing-service
+  config:
+    import: configserver:http://config-server-service:8888
   cloud:
     config:
       enabled: true
-      uri: http://localhost:8081
-  datasource:
-    url: jdbc:postgresql://localhost:5432/pricing
-    username: postgres
-    password: 1234
   jpa:
     hibernate:
       ddl-auto: update

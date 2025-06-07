@@ -1,0 +1,91 @@
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: specialdays-db-pv
+  labels:
+    type: local
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/specialdays-db-data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: specialdays-db-pvc
+  labels:
+    app: postgres
+    tier: database
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: specialdays-service-db-deployment
+  labels:
+    app: specialdays-service-db-deployment
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: specialdays-service-db-deployment
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: specialdays-service-db-deployment
+        tier: database
+    spec:
+      containers:
+        - name: specialdays-db
+          image: postgres
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_USER_SPECIALDAYS
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_PASSWORD_SPECIALDAYS
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: specialdays-db-data
+      volumes:
+        - name: specialdays-db-data
+          persistentVolumeClaim:
+            claimName: specialdays-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: specialdays-db-service
+  labels:
+    app: specialdays-db-service
+    tier: database
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+  selector:
+    app: specialdays-service-db-deployment
+    tier: database
+  type: LoadBalancer

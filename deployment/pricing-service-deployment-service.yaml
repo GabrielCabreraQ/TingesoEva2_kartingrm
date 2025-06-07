@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pricing-service-deployment
+  labels:
+    app: pricing-service-deployment
+spec:
+  selector:
+    matchLabels:
+      app: pricing-service-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pricing-service-deployment
+    spec:
+      containers:
+        - name: pricing-service
+          image: gabrielcq/pricing-service
+          ports:
+            - containerPort: 8096
+          env:
+            - name: SERVER_PORT
+              value: "0"
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_HOST_PRICING
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_PORT_PRICING
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_NAME_PRICING
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_USER_PRICING
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_PASSWORD_PRICING

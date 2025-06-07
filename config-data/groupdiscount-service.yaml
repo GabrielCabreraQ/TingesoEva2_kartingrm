@@ -1,10 +1,15 @@
 server:
-  port: ${PORT:${SERVER_PORT:0}}
+  port: ${SERVER_PORT}
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
 eureka:
+  instance:
+    preferIPAddress: true
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      default-zone: http://localhost:8761/eureka
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+      defaultZone: http://eureka-server-service:8761/eureka/

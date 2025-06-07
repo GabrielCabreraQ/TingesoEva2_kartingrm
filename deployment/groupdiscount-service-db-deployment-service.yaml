@@ -1,0 +1,91 @@
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: groupdiscount-db-pv
+  labels:
+    type: local
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/groupdiscount-db-data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: groupdiscount-db-pvc
+  labels:
+    app: postgres
+    tier: database
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: groupdiscount-service-db-deployment
+  labels:
+    app: groupdiscount-service-db-deployment
+    tier: database
+spec:
+  selector:
+    matchLabels:
+      app: groupdiscount-service-db-deployment
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: groupdiscount-service-db-deployment
+        tier: database
+    spec:
+      containers:
+        - name: groupdiscount-db
+          image: postgres
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_USER_GROUPDISCOUNT
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_PASSWORD_GROUPDISCOUNT
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: groupdiscount-db-data
+      volumes:
+        - name: groupdiscount-db-data
+          persistentVolumeClaim:
+            claimName: groupdiscount-db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: groupdiscount-db-service
+  labels:
+    app: groupdiscount-db-service
+    tier: database
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+  selector:
+    app: groupdiscount-service-db-deployment
+    tier: database
+  type: LoadBalancer
