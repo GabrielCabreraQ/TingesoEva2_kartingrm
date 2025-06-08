@@ -47,3 +47,14 @@ spec:
                 secretKeyRef:
                   name: postgres-credentials
                   key: DB_PASSWORD_BOOKING
+            - name: USER_MAIL
+              valueFrom:
+                secretKeyRef:
+                  name: booking-credentials
+                  key: USER_MAIL
+            - name: PASS_EM
+              valueFrom:
+                secretKeyRef:
+                  name: booking-credentials
+                  key: PASS_EM
+
